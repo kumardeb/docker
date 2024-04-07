@@ -1,25 +1,18 @@
 # docker-for-dev
 
-└── python-app
-    ├── Dockerfile
-    └── src
-        ├── req.txt
-        └── server.py
+server.py
 
+root@Gru src]# cat server.py 
+from flask import Flask
 
+# the all-important app variable:
+app = Flask(__name__)
 
-FROM python:3.6
+@app.route("/")
+def hello():
+    return "Hello World from Anaya"
 
-# Create app directory
-WORKDIR /app
-
-# Install app dependencies
-COPY src/req.txt ./
-
-RUN pip install -r req.txt
-
-# Bundle app source
-COPY src /app
-
-EXPOSE 8080
-CMD [ "python", "server.py" ]
+if __name__ == "__main__":
+	app.config['TEMPLATES_AUTO_RELOAD'] = True
+	app.run(host='0.0.0.0', debug=True, port=8080)
+[root@Gru src]# 
